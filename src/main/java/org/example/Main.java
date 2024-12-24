@@ -20,7 +20,7 @@ public class Main {
 
         int result = a + b;
 
-        bw.write(result + "\n");
+        bw.write("result : " + result + "\n");
         bw.flush();
         bw.close();
 
