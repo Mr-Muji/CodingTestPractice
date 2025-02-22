@@ -2,37 +2,57 @@
  *
  * 배열 정렬하는 법
  * 배열 출력하는 법(스트링으로 변환)
+ *
+ * 배열 입력시 초기화!!!
+ * Queue<int[]> queue2 = new LinkedList<>();
+        for(int i = 0; i < priorities.length; i++){
+            queue2.add(new int[]{i, priorities[i]});
+        }
+ *
  */
 
 
 package org.example.programmers;
 
-import java.util.Arrays;
+import java.util.*;
 
 public class 프로세스 {
     public int solution(int[] priorities, int location) {
         int answer = 0;
 
         //int[] arr = new int[priorities.length];
-        int[] arr = Arrays.stream(priorities).sorted().toArray();
+        //int[] arr = Arrays.stream(priorities).sorted().toArray();
         //arr을 역순으로
-        int index = priorities.length - 1;
-        int count = 0;
-        while (true) {
-            if (priorities[count] == arr[index]) {
-                count++;
-                index--;
-                answer++;
-                if (count == priorities.length) {
-                    break;
-                }
-            } else {
-                count++;
-                if (count == priorities.length) {
-                    count = 0;
-                }
-            }
+        //Arrays.sort(priorities);
+        //배열 역순 정렬
+        int[] arr = new int[priorities.length];
+        for(int i = 0; i < priorities.length; i++){
+            arr[i] = priorities[priorities.length - i - 1];
         }
+
+        //arr을 차례대로 큐에 입력
+        Queue<Integer> queue = new LinkedList<>();
+        for(int i = 0; i < arr.length; i++){
+            queue.add(arr[i]);
+        }
+        //queue 출력
+        System.out.println(queue);
+
+        //priorities를 차례대로 큐에 입력
+        Queue<int[]> queue2 = new LinkedList<>();
+        for(int i = 0; i < priorities.length; i++){
+            queue2.add(new int[]{i, priorities[i]});
+        }
+        //queue2 출력
+        System.out.println(queue2);
+
+        while(!queue.isEmpty()){
+            int temp = queue.poll();
+
+
+        }
+
+
 
         return answer;
     }
