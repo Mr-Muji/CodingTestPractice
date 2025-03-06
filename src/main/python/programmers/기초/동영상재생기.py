@@ -4,62 +4,49 @@
 https://school.programmers.co.kr/learn/courses/30/lessons/340213
 
 enumerate 의 사용
+// 연산
+iterable 객체의 for문 사용법
 
 """
 
 
 def solution(video_len, pos, op_start, op_end, commands):
-    answer = ""
-    current_time = get_time(pos)
-    if current_time >= get_time(op_start) and current_time <= get_time(op_end):
-        current_time = get_time(op_end)
 
-    for i in range(0, len(commands)):
-        if commands[i] == "prev":
-            current_time -= 10
-            if current_time < 0:
-                current_time = 0
-            if current_time >= get_time(op_start) and current_time <= get_time(op_end):
-                current_time = get_time(op_end)
-            
-        elif commands[i] == "next":
-            current_time += 10
-            if current_time >= get_time(video_len):
-                current_time = get_time(video_len)
-            if current_time >= get_time(op_start) and current_time <= get_time(op_end):
-                current_time = get_time(op_end)
-            
+    video_len = to_second(video_len)
+    pos = to_second(pos)
+    op_start = to_second(op_start)
+    op_end = to_second(op_end)
 
-    # print(a, b)
+    for command in commands:
+        if op_start <= pos <= op_end:
+            pos = op_end
 
-    answer = convert_to_time(current_time)
+        if command == "prev":
+            pos = max(0, pos - 10)
+        elif command == "next":
+            pos = min(video_len, pos + 10)
 
-    return answer
+    if op_start <= pos <= op_end:
+        pos = op_end
+
+    return to_time_str(pos)
 
 
-def get_time(str):
+def to_second(time_str):
     """
-    스트링타입 시간을 분으로 바꿔줌.
+    str 형식의 시간을 받아서 초 단위로 변환해주는 함수
     """
-    a, b = str.split(":")
-    full_time = int(a) * 60 + int(b)
-    return full_time
+    mm, ss = map(int, time_str.split(":"))
+    return mm * 60 + ss
 
 
-def convert_to_time(time):
-    a = int(time / 60)
-    if a < 10:
-        str_a = "0" + str(a)
-    else:
-        str_a = str(a)
-
-    b = int(time % 60)
-    if b < 10:
-        str_b = "0" + str(b)
-    else:
-        str_b = str(b)
-
-    return str_a + ":" + str_b
+def to_time_str(seconds):
+    """
+    초 단위의 시간을 받아서, "xx:xx" 형태의 str로 바꿔서 변환
+    """
+    mm = seconds // 60
+    ss = seconds % 60
+    return f"{mm:02}:{ss:02}"
 
 
 """
