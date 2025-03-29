@@ -1,0 +1,181 @@
+입출력 방식
+빠른 입력: BufferedReader + StringTokenizer
+빠른 출력: BufferedWriter 또는 StringBuilder
+java
+복사
+편집
+BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+StringTokenizer st = new StringTokenizer(br.readLine());
+int a = Integer.parseInt(st.nextToken());
+bw.write(a + "\n");
+bw.flush();
+bw.close();
+기본적인 Scanner & System.out.println() 사용 가능하지만 느림
+java
+복사
+편집
+Scanner sc = new Scanner(System.in);
+int a = sc.nextInt();
+System.out.println(a);
+2. 자료구조
+배열: int[] arr = new int[n];
+리스트: List<Integer> list = new ArrayList<>();
+큐: Queue<Integer> queue = new LinkedList<>();
+우선순위 큐: PriorityQueue<Integer> pq = new PriorityQueue<>();
+스택: Stack<Integer> stack = new Stack<>();
+해시셋: Set<Integer> set = new HashSet<>();
+해시맵: Map<Integer, Integer> map = new HashMap<>();
+3. 정렬
+기본 정렬 (Arrays.sort())
+java
+복사
+편집
+int[] arr = {5, 3, 1, 4, 2};
+Arrays.sort(arr);
+역순 정렬
+java
+복사
+편집
+Integer[] arr = {5, 3, 1, 4, 2};
+Arrays.sort(arr, Collections.reverseOrder());
+커스텀 정렬 (Comparator)
+java
+복사
+편집
+Arrays.sort(arr, (a, b) -> a - b); // 오름차순
+Arrays.sort(arr, (a, b) -> b - a); // 내림차순
+4. 탐색 알고리즘
+이진 탐색 (Binary Search)
+java
+복사
+편집
+int index = Arrays.binarySearch(arr, key);
+DFS (깊이 우선 탐색)
+java
+복사
+편집
+void dfs(int node) {
+    visited[node] = true;
+    for (int next : graph[node]) {
+        if (!visited[next]) dfs(next);
+    }
+}
+BFS (너비 우선 탐색)
+java
+복사
+편집
+void bfs(int start) {
+    Queue<Integer> queue = new LinkedList<>();
+    queue.add(start);
+    visited[start] = true;
+    while (!queue.isEmpty()) {
+        int node = queue.poll();
+        for (int next : graph[node]) {
+            if (!visited[next]) {
+                queue.add(next);
+                visited[next] = true;
+            }
+        }
+    }
+}
+5. 문자열 처리
+문자열을 문자 배열로 변환: char[] arr = str.toCharArray();
+문자열 뒤집기: new StringBuilder(str).reverse().toString();
+문자열 분할: String[] arr = str.split(" ");
+부분 문자열 추출: str.substring(start, end);
+6. 수학 관련
+최대공약수 & 최소공배수
+java
+복사
+편집
+int gcd(int a, int b) { return b == 0 ? a : gcd(b, a % b); }
+int lcm(int a, int b) { return a * (b / gcd(a, b)); }
+소수 판별
+java
+복사
+편집
+boolean isPrime(int n) {
+    if (n < 2) return false;
+    for (int i = 2; i * i <= n; i++) {
+        if (n % i == 0) return false;
+    }
+    return true;
+}
+에라토스테네스의 체
+java
+복사
+편집
+boolean[] isPrime = new boolean[n+1];
+Arrays.fill(isPrime, true);
+for (int i = 2; i * i <= n; i++) {
+    if (isPrime[i]) {
+        for (int j = i * i; j <= n; j += i) {
+            isPrime[j] = false;
+        }
+    }
+}
+7. 비트 연산
+& (AND), | (OR), ^ (XOR), ~ (NOT), << (왼쪽 시프트), >> (오른쪽 시프트)
+java
+복사
+편집
+int a = 5;  // 101
+int b = 3;  // 011
+System.out.println(a & b);  // 001 -> 1
+System.out.println(a | b);  // 111 -> 7
+System.out.println(a ^ b);  // 110 -> 6
+System.out.println(~a);     // 2의 보수 연산
+8. 재귀 & DP
+재귀 DFS
+java
+복사
+편집
+void dfs(int node) {
+    visited[node] = true;
+    for (int next : graph[node]) {
+        if (!visited[next]) dfs(next);
+    }
+}
+DP 기본
+java
+복사
+편집
+int[] dp = new int[n+1];
+dp[0] = 1;
+dp[1] = 1;
+for (int i = 2; i <= n; i++) {
+    dp[i] = dp[i-1] + dp[i-2];
+}
+9. 그리디 & 완전 탐색
+그리디: 정렬 후 선택
+java
+복사
+편집
+Arrays.sort(arr);
+int answer = 0;
+for (int x : arr) {
+    if (조건) answer += x;
+}
+완전 탐색 (백트래킹)
+java
+복사
+편집
+void backtrack(int depth) {
+    if (depth == n) {
+        // 정답 처리
+        return;
+    }
+    for (int i = 0; i < choices; i++) {
+        if (조건) continue;
+        backtrack(depth + 1);
+    }
+}
+10. 시간 복잡도 체크
+O(1): 상수 시간 (ex. 배열 인덱싱)
+O(log N): 로그 시간 (ex. 이진 탐색)
+O(N): 선형 시간 (ex. 단순 반복문)
+O(N log N): 정렬 (ex. Arrays.sort())
+O(N²): 중첩 반복문 (ex. 브루트포스)
+O(2^N): 재귀 (ex. 백트래킹)
+O(N!): 순열 생성 (ex. NP 문제)
